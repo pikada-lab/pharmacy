@@ -1,7 +1,7 @@
-export class OrderAdressDetail {
+export class Adress {
     street: string;
     building: string;
     floor: number;
     frontDoor: number;
-    comment: string;
+    intercom: string;
 }

@@ -1,27 +1,34 @@
-import Product from "../entities/Product"; 
-import OrderUserDetails from "../class/OrderUserDetails";
-import { OrderAdressDetail } from "../class/OrderAdressDetail";
+
 import PharmacyDetails from "../class/PharmacyDetails";
-import ProductItem from "./ProductItem.interface";
-import OrderCartItem from "../entities/OrderCartItem";
-import CartService from "../service/CartService.interface";
+import ProductStock from "./ProductStock.interface";
+import CartService from "../services/CartService.interface";
+import Product from "./Product.interface";
+import ProductSelected from "./CartProduct.interface";
+import OrderUserContacts from "../class/OrderUserContacts";
+import { Adress } from "../class/Adress";
+import ProductDecided from "./ProductDecided.interface";
 
-export default interface CartInterface {
-  constructor(CartService: CartService): any;
+export default interface Cart {
+ 
+  add(product: Product, item: ProductStock, quantity: number): boolean;
+  remove(item: ProductSelected): boolean;
+  findByProduct(item: Product): ProductSelected[];
 
-  add(product: Product, item: ProductItem): boolean;
-  remove(item: ProductItem): boolean;
-  getItem(item: ProductItem): OrderCartItem;
+  getProducts(): ProductSelected[];
 
   clear(): void;
 
-  validCartOrder(): number;
+  valid(): boolean;
   send(): boolean;
 
   getCountItems(): number;
-  getSum(): number;
+  getAmount(): number;
 
-  setUserDetails(user: OrderUserDetails): void;
-  setAdressDetails(adress: OrderAdressDetail): void;
+  getDeliveryPrice(): number;
+
+  setUserContacts(user: OrderUserContacts): boolean;
+  setAdress(adress: Adress): boolean;
   setPharmacyDetails(pharmacy: PharmacyDetails): void;
+  changePharmacyDetails(pharmacy: PharmacyDetails): ProductDecided[];
+  changePharmacyApply(pharmacy: PharmacyDetails, producStockDecided: ProductDecided[]): boolean;
 }

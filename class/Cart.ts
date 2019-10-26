@@ -1,6 +1,6 @@
 import OrderCart from "../entities/OrderCart";
 import CartInterface from "../interfaces/Cart.interface";
-import CartService from "../service/CartService.interface";
+import CartService from "../services/CartService.interface";
 
 export default class Cart implements CartInterface {
  
