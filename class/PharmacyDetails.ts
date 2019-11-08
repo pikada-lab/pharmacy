@@ -4,4 +4,6 @@ export default class PharmacyDetails {
     adress: string;
     phone: string;
     workingHours: string;
+    longitude: number;
+    latitude: number;
 }

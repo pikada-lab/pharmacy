@@ -14,7 +14,8 @@ export interface AppEvent {
 
 export enum EventType {
     CHANGE_STATUS = 1,
-    DELETED
+    DELETED,
+    CANGE_DATA
 }
 
 export enum EnityType {

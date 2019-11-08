@@ -1,0 +1,25 @@
+{
+  "name": "auxilium-pharmacy",
+  "version": "1.0.0",
+  "description": "В проект включены",
+  "main": "webpack.config.js",
+  "scripts": {
+    "test": "tsc && mocha -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pikada-lab/pharmacy.git"
+  },
+  "keywords": [
+    "pharmacy"
+  ],
+  "author": "Rost Gorodetskiy & Anton Dzhigurda",
+  "license": "SEE LICENSE IN ./READMY.md",
+  "bugs": {
+    "url": "https://github.com/pikada-lab/pharmacy/issues"
+  },
+  "homepage": "https://github.com/pikada-lab/pharmacy#readme",
+  "devDependencies": {
+    "mocha": "^6.2.2"
+  }
+}

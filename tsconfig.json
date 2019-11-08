@@ -4,6 +4,10 @@
         "outDir": "./dist/",
         "sourceMap": true,
         "noImplicitAny": true,
-        "module": "commonjs" 
-    }
+        "module": "commonjs",
+        "pretty": true
+    },
+    "exclude": [
+        "node_modules"
+    ]
 }

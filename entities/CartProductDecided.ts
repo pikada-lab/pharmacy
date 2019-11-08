@@ -3,12 +3,19 @@ import Product from "../interfaces/Product.interface";
 import { ProductStockType } from "../enums/ProductStockType.enum";
 import ProductDecided, { DecidedType } from "../interfaces/ProductDecided.interface";
 
-export class CartProductDecided implements ProductDecided {
+export default class CartProductDecided implements ProductDecided {
     productStock: ProductStock;
     changedProduct: Product;
     selectedProductStock: ProductStock;
+    /**
+     * Если товар не изменился, то эти решения не следует показывать пользователю
+     */
     visible = true;
+    
     decided: DecidedType;
+    /**
+     * Блокировка кнопки применения изменений, если истина, то возможно только удаление товара
+     */
     lock = true;
     quantity = 1;
     constructor(changedProduct: Product, productStock: ProductStock, quantity: number) {
@@ -39,21 +46,24 @@ export class CartProductDecided implements ProductDecided {
         const stock = this.changedProduct.getConsigments();
         if (this.productStock.getType() == ProductStockType.LOCAL) {
             if (stock.length > 0) {
-                return this.selectLocalProduct(stock[0]);
+                return this.selectLocalProduct(this.getBetterStockByPrice(stock));
             }
-            else if (supplier.length > 0) {
-                return this.changeSupplierProduct(stock[0]);
+            else if (supplier.length > 0) { 
+                return this.changeSupplierProduct(this.getBetterStockByPrice(supplier));
             }
         }
         else {
             if (stock.length > 0) {
-                return this.changeLocalProduct(stock[0]);
+                return this.changeLocalProduct(this.getBetterStockByPrice(stock));
             }
-            else if (supplier.length > 0) {
-                return this.selectSupplierProduct(stock[0]);
+            else if (supplier.length > 0) { 
+                return this.selectSupplierProduct(this.getBetterStockByPrice(supplier));
             }
         }
         return this.deleteProduct();
+    }
+    private getBetterStockByPrice(ps: ProductStock[]) {
+        return ps.sort((r , l)=>   r.getPrice() < l.getPrice() ? -1 : 1)[0];
     }
     private selectLocalProduct(stock: ProductStock) {
         if (stock.getPrice() === this.productStock.getPrice()) {

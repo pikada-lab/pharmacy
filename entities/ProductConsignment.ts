@@ -1,5 +1,6 @@
 import ProductStock from "../interfaces/ProductStock.interface";
 import { ProductStockType } from "../enums/ProductStockType.enum";
+import { StructureType } from "../interfaces/StructureType.type";
 
 /**
  * Поставка со склада аптеки
@@ -15,6 +16,27 @@ export default class ProductConsignment implements ProductStock {
     quantity: number;
     price: number;
     GDATE: string;
+
+    constructor(structure: StructureType) {
+        
+        this.id = +structure.id;
+        this.pid = +structure.pid;
+        this.scu = +structure.scu;
+        this.quantity = +structure.quantity;
+        this.price = +structure.price;
+        this.GDATE = structure.GDATE as string;
+    }
+
+    getModel(): StructureType {
+        return {
+          id: this.id,
+          pid: this.pid,
+          scu: this.scu,
+          quantity: this.quantity,
+          price: this.price,
+          GDATE: this.getGDATE().toJSON(),
+        }
+    }
 
 
     getType(): ProductStockType {

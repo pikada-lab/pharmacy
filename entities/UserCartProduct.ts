@@ -11,20 +11,21 @@ export default class UserCartProduct implements CartProduct, SerializeModel {
     productStock: ProductStock;
     quantity: number;
 
-    constructor(product: Product, productStock: ProductStock, quantity: number) {
+    constructor(product: Product, productStock: ProductStock, quantity: number) { 
         this.product = product;
         this.productStock = productStock;
         this.quantity = (quantity >= productStock.getQuantityMax()) ? productStock.getQuantityMax() : quantity;
     }
 
     setQuantity(quantity: number): number {
-        return this.quantity = quantity;
+        if(quantity == 0) quantity = 1;
+        return this.quantity = (quantity >= this.productStock.getQuantityMax()) ? this.productStock.getQuantityMax() : quantity;
     }
     getQuantity(): number {
         return this.quantity;
     }
     getAmount(): number {
-        return this.productStock.getPrice() * this.quantity;
+        return Math.round(this.productStock.getPrice() * this.quantity);
     }
     getProduct(): Product {
         return this.product;
@@ -35,7 +36,7 @@ export default class UserCartProduct implements CartProduct, SerializeModel {
     getStatus(): OrderProductStatusType {
         return OrderProductStatusType.NEW;
     }
-  
+
     getModel(): any {
         return {
             id: null,
@@ -54,7 +55,4 @@ export default class UserCartProduct implements CartProduct, SerializeModel {
         }
     }
 
-    setModel(structure: { [k: string]: string | number | boolean; }): void {
-        // TODO: 
-    }
 }
